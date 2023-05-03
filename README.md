@@ -3,7 +3,11 @@
 ## OpenAI
 Most of this code was actually written by **OpenAI** from this request:
 
-    "Write a python app that takes src_folder, dst_folder, new pixel_width, and dst_file_prefix as command line parameters. Read all jpg and png files from src_folder, resize each image to have the ame new pixel width, and write each resized image a file to the dst_folder prefixed with the given dst_file_oprefix."
+    "Write a python app that takes src_folder, dst_folder, new pixel_width,  
+    and dst_file_prefix as command line parameters. Read all jpg and png   
+    files from src_folder, resize each image to have the ame new pixel   
+    width, and write each resized image a file to the dst_folder prefixed   
+    with the given dst_file_oprefix."
 
 
 ## Installation:
