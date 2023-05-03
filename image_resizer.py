@@ -1,8 +1,26 @@
 import os
 import sys
+from pathlib import Path
 from PIL import Image
-import images2gif
 
+
+def resize_img_file(src_file:Path, dst_file:Path,  new_pixel_width:int):
+
+    # Open img using Pillow from src_file
+    img = Image.open(src_file)
+    
+    # Calculate new height while preserving aspect ratio
+    width, height = img.size
+    aspect_ratio = height / width
+    new_height = round(new_pixel_width * aspect_ratio)
+    
+    # Resize the img
+    resized_img = img.resize((new_pixel_width, new_height), Image.ANTIALIAS)
+    
+    # save the resized img to dst_file
+    resized_img.save(dst_file)
+
+    
 def resize_img_files(src_folder:str, dst_folder:str, new_pixel_width:int, dst_file_prefix: str="r_") -> None:
     """
     takes a src_folder, dst_folder, new pixel_width and a prefix
@@ -11,38 +29,25 @@ def resize_img_files(src_folder:str, dst_folder:str, new_pixel_width:int, dst_fi
     a file in the dst_folder with prefix added to the dst filename.
     """
     
-    # Loop through files in folder
-    for file_name in os.listdir(src_folder):
+    src_folder_path = Path(src_folder)
+    dst_folder_path = Path(dst_folder)
+    
+    # gather src_file Paths that end with suffixes
+    suffixes = [".gif",".jpg",".png"]
+    src_files = [src_file for suffix in suffixes for src_file in src_folder_path.glob(f"*{suffix}")]
+    for src_file in src_files:
         
         # skip files that have already been resized
-        if file_name.startswith(dst_file_prefix):
+        if src_file.name.startswith(dst_file_prefix):
             continue
+              
+        # define the dst_file Path          
+        dst_file = Path(dst_folder_path / (dst_file_prefix + src_file.name))
         
-        # Check if file is GIF
-        if file_name.endswith(".gif"):
-            src_file_path = src_folder + '/' + file_name
-            dst_file_path = dst_folder + '/' + dst_file_prefix + file_name
-            gif_processed = images2gif.resize_gif_file(src_file_path, dst_file_path, new_pixel_width)
-            print(f"gif_processed:{gif_processed}")
-        else:
-            # Check if file is a JPG or PNG image
-            if file_name.endswith(".jpg") or file_name.endswith(".png"):
-                # Open image using Pillow
-                src_image_path = os.path.join(src_folder, file_name)
-                image = Image.open(src_image_path)
-
-                # Calculate new height while preserving aspect ratio
-                width, height = image.size
-                aspect_ratio = height / width
-                new_height = round(new_pixel_width * aspect_ratio)
-
-                # Resize image using Pillow
-                resized_image = image.resize((new_pixel_width, new_height))
-
-                # Save resized image to dst_folder with prefixed filename
-                resized_image_path = os.path.join(dst_folder, f"{dst_file_prefix}{file_name}")
-                resized_image.save(resized_image_path)
-                print(f"src_image_path:{src_image_path} resized_image_path:{resized_image_path}")
+        # Read img from src_file, resize img, and save srsized img to dst_file
+        resize_img_file(src_file, dst_file, new_pixel_width)
+        
+        print(f"img:{src_file.name} -> {dst_file.name}")
 
 if __name__ == '__main__':
     if len(sys.argv) != 5:

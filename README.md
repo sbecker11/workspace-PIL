@@ -4,10 +4,10 @@
 Most of this code was actually written by **OpenAI** from this request:
 
     "Write a python app that takes src_folder, dst_folder, new pixel_width,  
-    and dst_file_prefix as command line parameters. Read all jpg and png   
-    files from src_folder, resize each image to have the ame new pixel   
-    width, and write each resized image a file to the dst_folder prefixed   
-    with the given dst_file_oprefix."
+    and dst_file_prefix as command line parameters. Read all gif, jpg and png   
+    files from src_folder, resize each image to have the same new pixel   
+    width, and write each resized image to the dst_folder with its filename
+    prefixed with the given dst_file_oprefix."
 
 
 ## Installation:
@@ -22,15 +22,10 @@ Most of this code was actually written by **OpenAI** from this request:
 ## Functionality: 
 image_resizer is a python script that:  
 1. takes a src_folder, dst_folder, new pixel_width and a dst_file_prefix  
-1. reads all gif, jpg and png files from src_folder,   
-1. resizes each to have the new pixel width,   
-1. writes each resized image to dst_file in the dst_folder   
-1. with prefix added to dst file  
+1. reads all gif, jpg and png file_names from src_folder,  
+1. resizes each to have the new pixel width,  
+2. writes each resized image to (dst_file prefix + file_name) to the dst_folder  
 
-## Attention:
-This module uses the images2gif module which is  
-Copyright (C) 2012, Almar Klein, Ant1, Marius van Voorden  
-    
-## Bugs:  
-Unfortunately, gif file resizing functionality is currently failing.
+## Cavaets:  
+Unfortunately, the resized version of any animated gif file is not animated.
 
