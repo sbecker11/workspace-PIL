@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: image_resizer",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${fileDirname}",
+            "program": "image_resizer.py",
+            "console": "integratedTerminal",
+            "args": [
+                "/Users/sbecker11/Pictures/Portfolio/20 - WB Games/orig/",
+                "/Users/sbecker11/Pictures/Portfolio/20 - WB Games/resized/",
+                "400",
+                "r_"
+            ]
+        }
+    ]
+}
